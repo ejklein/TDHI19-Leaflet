@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<!-- This is the title for the page that displays at the top of the browser -->
+		<title>Sample Leaflet Map - Street Map</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 		
+		<!-- This is the path to the icon that displays in the browser next to the page title -->
+ 		<link rel="shortcut icon" type="image/png" href="images/star.png"/>
+		
+		<!-- To get the map to display properly, you need to call the Leaflet CSS and JS files. The leaflet-providers script controls tile layers, and styles.css is a local style sheet that could be further customized. -->
+		<link rel="stylesheet" href="css/leaflet.css">
+		<link rel="stylesheet" href="css/styles.css">
+		<script src="js/leaflet.js"></script>
+		<script src="js/leaflet-providers.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	</head>
+	<body>
+
+		<!-- This is where the map will display on the HTML page. The size of the container is controlled in the map div in styles.css -->
+		<div id="map"></div>
+		<script>
+
+			// This defines the "mymap" variable and sets coordinates and zoom level
+			var mymap = L.map('map', {
+				minZoom: 3, 
+				zoomSnap: 0.25 
+				});
+ 			mymap.setView([35.911309, -79.048098], 7);
+ 		
+ 			// Here we set the tile layer. This one does not require an API key. 
+			L.tileLayer.provider('OpenStreetMap.HOT', {
+				maxZoom: 12,
+				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+				}).addTo(mymap);
+		
+			// Here we define the variable for our custom icon, set the path to the icon image, and set where the pop up anchors to the image
+			var testIcon = L.icon({
+				//set path to icon
+				iconUrl: 'images/red-icon.png',
+				// size of the icon
+				iconSize: [75, 75],
+				// anchor popup
+				popupAnchor:  [9, -12]
+				});
+
+			var homeIcon = L.icon({
+				//set path to icon
+				iconUrl: 'images/default-icon.png',
+				// size of the icon
+				iconSize: [75, 75],
+				// anchor popup
+				popupAnchor:  [9, -12]
+				});
+		
+			// Here we define the variable for the circle on our map, which shows a radius of 100 miles from Davis Library
+			var circle = L.circle([35.911309, -79.048098], {
+   				color: '#00A86B',
+  				fillColor: '#00A86B',
+ 				fillOpacity: 0.5,
+				radius: 160934.5 //100 miles converted to meters
+				}).addTo(mymap);
+		
+			// Here we define the coordinates of the polygon, which encompasses UNC system institutions	
+			var polygon = L.polygon([
+   				[35.30356, -80.73238], //UNCC
+				[35.60194444, -77.2205], //ECU
+				[35.78722222, -78.67055556], //NCSU
+				[35.97416667, -78.89861111], //NCCU
+				[35.90861111, -79.04916667], //UNC
+				[36.0695, -79.8114], //UNCG
+				]).addTo(mymap);
+
+			// Here we add popups for our shapes
+			circle.bindPopup("Institutions within this circle are within 100 miles of Davis Library at UNC-Chapel Hill");
+			polygon.bindPopup("The Institutions that make up this polygon are part of the UNC system");
+
+			// The following are the variables for each marker and pop-up on the map. You have to define the variable for the popup before you define the variable for the marker. The marker variable calls both the previously defined icon and popup variables. 
+
+			// Suzanne Churchill
+			var DavidsonPop = '<p>Suzanne Churchill is from <a href="https://en.wikipedia.org/wiki/Davidson_College">Davidson College</a></p>' ;
+			var Davidson = L.marker([35.49999, -80.845296], {icon:testIcon}).bindPopup(DavidsonPop).addTo(mymap);			
+			
+			// Beth Fischer
+			var DukePop = '<p>Beth Fischer is from <a href="https://en.wikipedia.org/wiki/Duke_University">Duke University</a></p>' ;
+			var Duke = L.marker([36.00111111, -78.562], {icon:testIcon}).bindPopup(DukePop).addTo(mymap);			
+			
+			// David Gibson and Donna Kain
+			var ECUPop = '<p>David Gibson and Donna Kain are from <a href="https://en.wikipedia.org/wiki/East_Carolina_University">East Carolina University</a></p>' ;
+			var ECU = L.marker([35.60194444, -77.2205], {icon:testIcon}).bindPopup(ECUPop).addTo(mymap);			
+			
+			// Meg Dickerson
+			var GuilfordPop = '<p>Meg Dickerson is from <a href="https://en.wikipedia.org/wiki/Guilford_College">Guilford College</a></p>' ;
+			var Guilford = L.marker([36.09527778, -79.88861111], {icon:testIcon}).bindPopup(GuilfordPop).addTo(mymap);			
+			
+			// Ericka Christie
+			var LoyolaPop = '<p>Ericka Christie is from <a href="https://en.wikipedia.org/wiki/Loyola_University_Chicago">Loyola University - Chicago</a></p>' ;
+			var Loyola = L.marker([41.9999, -87.6578], {icon:testIcon}).bindPopup(LoyolaPop).addTo(mymap);			
+			
+			// Paul Keys
+			var MeredithPop = '<p>Paul Keys is from <a href="https://en.wikipedia.org/wiki/Meredith_College">Meredith College</a></p>' ;
+			var Meredith = L.marker([35.79665, -78.68923], {icon:testIcon}).bindPopup(MeredithPop).addTo(mymap);			
+			
+			// Mia Partlow
+			var NCSUPop = '<p>Mia Partlow is from <a href="https://en.wikipedia.org/wiki/North_Carolina_State_University">NC State University</a></p>' ;
+			var NCSU = L.marker([35.78722222, -78.67055556], {icon:testIcon}).bindPopup(NCSUPop).addTo(mymap);			
+			
+			// Barbara Torian, Michele Ware, and Rachelle Gold
+			var NCCUPop = '<p>Barbara Torian, Michele Ware, and Rachelle Gold are from <a href="https://en.wikipedia.org/wiki/North_Carolina_Central_University">North Carolina Central University</a></p>' ;
+			var NCCU = L.marker([35.97416667, -78.89861111], {icon:testIcon}).bindPopup(NCCUPop).addTo(mymap);			
+			
+			// Cait Kennedy, Yukun Yang, Veronica McGurrin, Vitaly Radsky, Craig Gill, and Michael Levine
+			var UNCPop = '<p>Cait Kennedy, Yukun Yang, Veronica McGurrin, Vitaly Radsky, Craig Gill, and Michael Levine are from <a href="https://en.wikipedia.org/wiki/University_of_North_Carolina_at_Chapel_Hill">University of North Carolina</a></p>' ;
+			var UNC = L.marker([35.90861111, -79.04916667], {icon:homeIcon}).bindPopup(UNCPop).addTo(mymap);			
+			
+			// Jo Klein and Maggie Murphy
+			var UNCGPop = '<p>Jo Klein and Maggie Murphy are from <a href="https://en.wikipedia.org/wiki/University_of_North_Carolina_at_Greensboro">University of North Carolina at Greensboro</a></p>' ;
+			var UNCG = L.marker([36.0695, -79.8114], {icon:testIcon}).bindPopup(UNCGPop).addTo(mymap);			
+			
+			// Sania Muneer
+			var LahorePop = '<p>Sania Muneer is from <a href="https://en.wikipedia.org/wiki/University_of_Lahore">University of Lahore</a></p>' ;
+			var Lahore = L.marker([31.390875, 74.240935], {icon:testIcon}).bindPopup(LahorePop).addTo(mymap);			
+			
+			// Natalie Ornat
+			var UNCCPop = '<p>Natalie Ornat is from <a href="https://en.wikipedia.org/wiki/University_of_North_Carolina_at_Charlotte">University of North Carolina at Charlotte</a></p>' ;
+			var UNCC = L.marker([35.30356, -80.73238], {icon:testIcon}).bindPopup(UNCCPop).addTo(mymap);			
+			
+			// Andrew Wells
+			var WisconsinPop = '<p>Andrew Wells is from <a href="https://en.wikipedia.org/wiki/University_of_Wisconsin%E2%80%93Madison">University of Wisconsin - Madison</a></p>' ;
+			var Wisconsin = L.marker([43.075, -89.41722222], {icon:testIcon}).bindPopup(WisconsinPop).addTo(mymap);
+		
+			//Here we create an empty polyline object
+			var Polyline = L.polyline([], {
+				weight: 5,
+				opacity: 0.5,
+				color: 'yellow',
+			}).addTo(mymap);
+
+			// Here we define our institutions
+			var davidson = new L.LatLng(35.49999, -80.845296);			
+			var duke = new L.LatLng(36.00111111, -78.562);			
+			var ecu = new L.LatLng(35.60194444, -77.2205);			
+			var guilford = new L.LatLng(36.09527778, -79.88861111);						
+			var loyola = new L.LatLng(41.9999, -87.6578);						
+			var meredith = new L.LatLng(35.79665, -78.68923);						
+			var ncsu = new L.LatLng(35.78722222, -78.67055556);						
+			var nccu = new L.LatLng(35.97416667, -78.89861111);						
+			var unc = new L.LatLng(35.90861111, -79.04916667);						
+			var uncg = new L.LatLng(36.0695, -79.8114);						
+			var lahore = new L.LatLng(31.390875, 74.240935);						
+			var uncc = new L.LatLng(35.30356, -80.73238);						
+			var wisconsin = new L.LatLng(43.075, -89.41722222);
+
+
+			// Here we add the lines from UNC Chapel Hill to all of our institutions
+			Polyline.setLatLngs([[unc, davidson], [unc, duke], [unc, ecu], [unc, guilford], [unc, loyola], [unc, meredith], [unc, ncsu], [unc, nccu], [unc, uncg], [unc, lahore], [unc, uncc], [unc, wisconsin]]); 
+			
+		</script>
+	</body>
+</html>

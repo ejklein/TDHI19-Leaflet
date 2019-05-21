@@ -1,0 +1,16 @@
+/* Leaflet requires that you set an HTML height in order for the map to display */
+
+html {
+  height: 100%;
+}
+
+/* This sets the size of the map container within the blank HTML page */
+
+#map {
+  height: 50vw;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
